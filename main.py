@@ -5,8 +5,8 @@ import matplotlib.pyplot as plt
 types = ["i", "s", "d", "msw", "mww"]
 probabilities = [0.45, 0.3, 0.2, 0.025, 0.025]
 
-selectedType = np.random.choice(types, p=probabilities)
-
+iteration = 0
+kills = 0
 
 def kill_streak(cockroachType, streak=0, backtrack=0):
     if cockroachType == "i":
@@ -14,7 +14,7 @@ def kill_streak(cockroachType, streak=0, backtrack=0):
     elif cockroachType == "d":
         streak += 5
     elif cockroachType == "msw":
-        streak += 3
+        streak += 50
     elif cockroachType == "mww":
         streak = 10000000000
     elif cockroachType == "s":
@@ -49,8 +49,16 @@ def kill_streak(cockroachType, streak=0, backtrack=0):
     return streak
 
 
-y = kill_streak(selectedType)
-print(math.log(y) + 1)
+while iteration < 3:
+    iteration += 1
+    selectedType = np.random.choice(types, p=probabilities)
+    print(selectedType)
+    kills += kill_streak(selectedType)
+
+print(kills)
+logarathmicVal = math.ceil(math.log(kills))
+
+
 
 
 
