@@ -1,9 +1,10 @@
 import math
 import numpy as np
 import matplotlib.pyplot as plt
+import utility as ut
 
 types = ["i", "s", "d", "msw", "mww"]
-probabilities = [0.45, 0.3, 0.2, 0.025, 0.025]
+probabilities = [0.35, 0.3, 0.3, 0.025, 0.025]
 
 iteration = 0
 kills = 0
@@ -49,14 +50,36 @@ def kill_streak(cockroachType, streak=0, backtrack=0):
     return streak
 
 
-while iteration < 3:
-    iteration += 1
-    selectedType = np.random.choice(types, p=probabilities)
-    print(selectedType)
-    kills += kill_streak(selectedType)
+fig, axes = plt.subplots()
+axes.set_xlim(0, 1)
+axes.set_ylim(0, 1)
+currentRect = None
 
-print(kills)
-logarathmicVal = math.ceil(math.log(kills))
+ratios = np.empty(5)
+
+while iteration < 5:
+    selectedType = np.random.choice(types, p=probabilities)
+    kills = kill_streak(selectedType)
+    ratio = kills / 250
+    if ratio > 1:
+        ratio = 1
+    print(f"{selectedType}, {ratio}")
+    ratios[iteration] = ratio
+    if currentRect:
+        currentRect.remove()
+    currentRect = ut.draw_rectangle(axes, ratio)
+    plt.show(block=False)
+    plt.pause(0.01)
+    iteration += 1
+
+currentRect.remove()
+averageRatio = np.mean(ratios)
+print(averageRatio)
+ut.draw_rectangle(axes, averageRatio)
+plt.show(block=False)
+plt.pause(3)
+
+
 
 
 
