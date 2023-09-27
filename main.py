@@ -9,6 +9,7 @@ probabilities = [0.35, 0.3, 0.3, 0.025, 0.025]
 iteration = 0
 kills = 0
 
+
 def kill_streak(cockroachType, streak=0, backtrack=0):
     if cockroachType == "i":
         streak += 1
@@ -55,9 +56,9 @@ axes.set_xlim(0, 1)
 axes.set_ylim(0, 1)
 currentRect = None
 
-ratios = np.empty(5)
+ratios = np.empty(100)
 
-while iteration < 5:
+while iteration < 100:
     selectedType = np.random.choice(types, p=probabilities)
     kills = kill_streak(selectedType)
     ratio = kills / 250
@@ -69,7 +70,7 @@ while iteration < 5:
         currentRect.remove()
     currentRect = ut.draw_rectangle(axes, ratio)
     plt.show(block=False)
-    plt.pause(0.01)
+    plt.pause(0.05)
     iteration += 1
 
 currentRect.remove()
@@ -77,7 +78,7 @@ averageRatio = np.mean(ratios)
 print(averageRatio)
 ut.draw_rectangle(axes, averageRatio)
 plt.show(block=False)
-plt.pause(3)
+plt.pause(30)
 
 
 
