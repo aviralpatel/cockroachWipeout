@@ -78,7 +78,7 @@ averageRatio = np.mean(ratios)
 print(averageRatio)
 ut.draw_rectangle(axes, averageRatio)
 plt.show(block=False)
-plt.pause(30)
+plt.pause(100)
 
 
 
